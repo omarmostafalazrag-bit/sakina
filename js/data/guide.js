@@ -5,6 +5,7 @@ export const GUIDE_SECTIONS = [
   { id: 'obligaciones', label: 'Obligaciones', intro: 'Lo que Allah pide a todo musulmán adulto y con capacidad. Cumplirlo es adoración y se recompensa.' },
   { id: 'derechos', label: 'Derechos', intro: 'El islam establece derechos que nadie puede quitarte, y derechos que tú debes respetar en los demás.' },
   { id: 'prohibido', label: 'Prohibido', intro: 'Lo haram: lo que Allah ha prohibido para protegerte a ti y a la sociedad. Si caes en algo, la puerta del arrepentimiento siempre está abierta.' },
+  { id: 'matrimonio', label: 'Matrimonio', intro: 'El trato entre esposos según el Corán y la Sunnah: derechos y obligaciones de cada uno, el ejemplo del Profeta ﷺ y la modestia.' },
   { id: 'permitido', label: 'Permitido', intro: 'La regla general es que todo es lícito salvo lo que una prueba clara prohíbe. La lista de lo halal es mucho más larga que la de lo haram.' },
 ];
 
@@ -88,4 +89,80 @@ export const PERIOD_INFO = [
   'Cuando termina el sangrado haces el ghusl: intención, lavar todo el cuerpo con agua y que llegue a la raíz del cabello.',
   'La duración máxima de la regla depende de la escuela: 10 días para los hanafíes y 15 para malikíes, shafiíes y hanbalíes. Un sangrado que pasa ese límite se trata como istihada: rezas haciendo wudu para cada oración.',
   'Durante la regla puedes hacer dikr, duas y escuchar el Corán, y seguir aprendiendo. Tu recompensa por lo que solías hacer continúa.',
+];
+
+// ---------------- Matrimonio (shown to everyone, grouped) ----------------
+export const MARRIAGE_GROUPS = [
+  { id: 'base', label: 'La base: amor y misericordia' },
+  { id: 'esposa', label: 'Derechos de la esposa (obligaciones del esposo)' },
+  { id: 'esposo', label: 'Derechos del esposo (obligaciones de la esposa)' },
+  { id: 'mutuos', label: 'Derechos de los dos' },
+  { id: 'profeta', label: 'Cómo trataba el Profeta ﷺ a sus esposas' },
+  { id: 'modestia', label: 'Modestia y pudor' },
+  { id: 'correcto', label: 'Lo correcto' },
+  { id: 'incorrecto', label: 'Lo incorrecto' },
+];
+
+export const MARRIAGE = [
+  { group: 'base', title: 'Una señal de Allah', ar: 'وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً', text: '«Entre Sus signos está haberos creado esposas de entre vosotros para que encontréis sosiego en ellas, y puso entre vosotros amor y misericordia.» El matrimonio es para encontrar calma, no para competir.', src: 'Corán 30:21' },
+  { group: 'base', title: 'Vestido el uno del otro', ar: 'هُنَّ لِبَاسٌ لَّكُمْ وَأَنتُمْ لِبَاسٌ لَّهُنَّ', text: '«Ellas son vestido para vosotros y vosotros sois vestido para ellas.» El vestido protege, da calor, embellece y tapa los defectos: así debe ser cada cónyuge para el otro.', src: 'Corán 2:187' },
+  { group: 'base', title: 'Derechos equilibrados', text: '«Ellas tienen derechos equivalentes a sus obligaciones, según lo reconocido.» Cada derecho que uno tiene es una obligación del otro, y al revés.', src: 'Corán 2:228' },
+  { group: 'base', title: 'Una sunnah que protege', text: 'El matrimonio protege la mirada y la castidad, y el Profeta ﷺ lo animó a quien pudiera permitírselo. Se considera una sunnah y un acto de adoración.', src: 'Al-Bujari 5066; Muslim 1400' },
+
+  { group: 'esposa', title: 'Su dote (mahr)', text: 'Se la entrega el marido al casarse, como regalo obligatorio. Es solo de ella y él no puede recuperarla sin su permiso.', src: 'Corán 4:4, 4:20' },
+  { group: 'esposa', title: 'Manutención (nafaqa)', text: 'Vivienda, comida, ropa y lo necesario, según las posibilidades de él, aunque ella tenga dinero propio. Lo que él gasta en su familia con buena intención es sadaqa, «incluso el bocado que llevas a la boca de tu mujer».', src: 'Corán 65:7; Muslim 1218; Al-Bujari 56' },
+  { group: 'esposa', title: 'Buen trato', text: '«Convivid con ellas con bondad. Y si os disgustan, puede que os disguste algo en lo que Allah ha puesto mucho bien.»', src: 'Corán 4:19' },
+  { group: 'esposa', title: 'Respeto a su dignidad', text: 'Darle de comer cuando él come, vestirla cuando él se viste, no golpearla en la cara, no insultarla y no dejar de hablarle salvo dentro de casa.', src: 'Abu Dawud 2142' },
+  { group: 'esposa', title: 'Valorarla en conjunto', text: '«Que el creyente no odie a una creyente: si le disgusta un rasgo suyo, le agradará otro.»', src: 'Muslim 1469' },
+  { group: 'esposa', title: 'Cuidar su religión', text: 'Ayudarla a practicar, protegerla del daño y darle tiempo para aprender y rezar.', src: 'Corán 66:6' },
+  { group: 'esposa', title: 'Justicia si hay más de una esposa', text: 'Igualdad en tiempo, gasto y trato. Quien no es justo llegará el Día del Juicio con un lado caído. Si teme no ser justo, el Corán dice: «entonces una sola».', src: 'Corán 4:3; Abu Dawud 2133' },
+  { group: 'esposa', title: 'Su consentimiento', text: 'No se la puede casar sin su permiso, y tiene derecho a pedir la separación (jul) si la convivencia es imposible.', src: 'Al-Bujari 5136, 5273' },
+
+  { group: 'esposo', title: 'Respeto y buen trato', text: 'Los mismos «derechos según lo reconocido»: palabras amables, gratitud por su esfuerzo y apoyo en las dificultades.', src: 'Corán 2:228' },
+  { group: 'esposo', title: 'Guardar su honor y sus bienes', text: 'Las mujeres rectas son «guardianas en ausencia de lo que Allah ordena guardar»: su honor, su casa y su dinero.', src: 'Corán 4:34' },
+  { group: 'esposo', title: 'La casa', text: 'No permitir entrar en casa a quien el marido no quiere. Igualmente, él debe respetar a la familia de ella.', src: 'Muslim 1218' },
+  { group: 'esposo', title: 'La intimidad', text: 'Responder a la intimidad del esposo salvo que haya una excusa (enfermedad, cansancio, la regla). Es un derecho mutuo: él también debe atender las necesidades de ella.', src: 'Al-Bujari 5193' },
+  { group: 'esposo', title: 'Ayuno voluntario', text: 'Hacer los ayunos voluntarios con su conocimiento cuando él está en casa. Ramadán y la recuperación no necesitan permiso.', src: 'Al-Bujari 5195' },
+  { group: 'esposo', title: 'Gratitud', text: 'El Profeta ﷺ advirtió contra negar el bien recibido del cónyuge: «le das todo y, al ver algo que no le gusta, dice: nunca he visto bien de ti».', src: 'Al-Bujari 29' },
+
+  { group: 'mutuos', title: 'Guardar los secretos', text: 'Entre las peores personas ante Allah está quien tiene intimidad con su pareja y luego divulga sus secretos.', src: 'Muslim 1437' },
+  { group: 'mutuos', title: 'Consultarse', text: 'Decidir juntos lo importante, como el destete de un hijo, que el Corán menciona «por mutuo acuerdo y consulta».', src: 'Corán 2:233' },
+  { group: 'mutuos', title: 'Disfrutar el uno del otro', text: 'La intimidad entre esposos es lícita y hasta recompensada. Se recomienda el cariño y los preliminares, y empezar con el nombre de Allah.', src: 'Muslim 1006; Al-Bujari 141' },
+  { group: 'mutuos', title: 'Arreglar los conflictos', text: 'Si hay riesgo de ruptura, se nombra un árbitro de la familia de él y otro de la de ella: «Si quieren reconciliarse, Allah les pondrá de acuerdo».', src: 'Corán 4:35' },
+  { group: 'mutuos', title: 'Herencia y lealtad', text: 'Cada uno hereda del otro, y la lealtad continúa incluso después de la muerte.', src: 'Corán 4:12' },
+  { group: 'mutuos', title: 'Educar juntos a los hijos', text: '«Todos sois pastores y responsables de vuestro rebaño»: el hombre de su familia y la mujer de la casa de su marido y de sus hijos.', src: 'Al-Bujari 893' },
+
+  { group: 'profeta', title: 'Ayudaba en casa', text: 'Aisha contó que estaba al servicio de su familia, y cuando llegaba la hora de la oración, salía a rezar. Remendaba su ropa y arreglaba su calzado.', src: 'Al-Bujari 676; Musnad Ahmad' },
+  { group: 'profeta', title: 'Hacía carreras con Aisha', text: 'Una vez ella le ganó. Años después, él le ganó y le dijo sonriendo: «Esta por aquella».', src: 'Abu Dawud 2578' },
+  { group: 'profeta', title: 'Bebía donde ella había bebido', text: 'Ponía sus labios en el mismo sitio del vaso donde Aisha había bebido, como gesto de cariño.', src: 'Muslim 300' },
+  { group: 'profeta', title: 'Decía su amor en voz alta', text: 'Le preguntaron quién era la persona que más amaba y respondió: «Aisha». No le daba vergüenza decirlo.', src: 'Al-Bujari 3662' },
+  { group: 'profeta', title: 'Le daba su espacio para disfrutar', text: 'La dejó mirar, cubriéndola con su manto, a los abisinios jugar con sus lanzas en la mezquita, hasta que ella misma se cansó.', src: 'Al-Bujari 5236' },
+  { group: 'profeta', title: 'Paciencia con los celos', text: 'Una de sus esposas rompió por celos un plato que otra le había enviado. Él recogió los trozos y la comida y dijo con calma: «Vuestra madre se ha puesto celosa».', src: 'Al-Bujari 5225' },
+  { group: 'profeta', title: 'Escuchaba su consejo', text: 'En Hudaybiyya, cuando los compañeros no obedecían, Umm Salama le aconsejó salir y sacrificar él primero sin decir nada. Lo hizo y todos le siguieron.', src: 'Al-Bujari 2731' },
+  { group: 'profeta', title: 'Fiel a Jadiya', text: 'Años después de su muerte la seguía nombrando con cariño y enviaba regalos a sus amigas: «Allah me dio su amor».', src: 'Al-Bujari 3818; Muslim 2435' },
+  { group: 'profeta', title: 'Nunca pegó a una mujer', text: '«El Mensajero de Allah nunca golpeó a nadie con su mano, ni a una mujer ni a un sirviente.»', src: 'Muslim 2328' },
+  { group: 'profeta', title: 'Justo entre sus esposas', text: 'Sorteaba entre ellas quién le acompañaba en los viajes y repartía su tiempo con igualdad.', src: 'Al-Bujari 2593' },
+
+  { group: 'modestia', title: 'Bajar la mirada, ambos', text: 'El Corán ordena primero a los hombres y después a las mujeres bajar la mirada y guardar sus partes íntimas.', src: 'Corán 24:30-31' },
+  { group: 'modestia', title: 'Entre esposos no hay awra', text: 'Ante el cónyuge todo es lícito. La modestia es hacia fuera; dentro del matrimonio se recomienda arreglarse el uno para el otro.', src: 'Corán 23:5-6' },
+  { group: 'modestia', title: 'La intimidad del dormitorio', text: 'Incluso los hijos y los empleados piden permiso para entrar en tres momentos: antes de Fajr, al mediodía y después de Isha.', src: 'Corán 24:58' },
+  { group: 'modestia', title: 'No quedarse a solas con otros', text: 'Evitar la soledad con alguien del otro sexo con quien podrías casarte, porque es la puerta de la fitna.', src: 'Al-Bujari 5233' },
+  { group: 'modestia', title: 'Las redes y los mensajes', text: 'Las conversaciones privadas y coqueteos con otras personas por el móvil rompen la confianza igual que en persona. La regla de la mirada se aplica a la pantalla.', src: 'Corán 24:30; Muslim 2657' },
+  { group: 'modestia', title: 'El haya, belleza del creyente', text: '«El pudor no trae más que bien.» La modestia también está en las palabras, el tono y la forma de hablar del cónyuge ante otros.', src: 'Al-Bujari 6117' },
+
+  { group: 'correcto', title: 'Hacerse regalos', text: '«Haceos regalos y os amaréis.»', src: 'Al-Adab al-Mufrad 594' },
+  { group: 'correcto', title: 'Sonreír y hablar con cariño', text: 'La buena palabra es sadaqa, y la sonrisa a tu familia también.', src: 'Al-Bujari 2989; At-Tirmidhi 1956' },
+  { group: 'correcto', title: 'Agradecer lo pequeño', text: '«Quien no agradece a la gente no agradece a Allah.» Da las gracias por la comida, el trabajo y el esfuerzo diario.', src: 'Abu Dawud 4811' },
+  { group: 'correcto', title: 'Pedir perdón y perdonar', text: 'Disculparse aunque cueste, no guardar rencor y no recordar los errores del pasado en cada discusión.', src: 'Corán 64:14' },
+  { group: 'correcto', title: 'Rezar juntos', text: 'Allah tiene misericordia del que se levanta de noche a rezar y despierta a su esposa, y de la que hace lo mismo con su esposo.', src: 'Abu Dawud 1308' },
+  { group: 'correcto', title: 'Arreglarse el uno para el otro', text: 'Ibn Abbas decía: «Me gusta arreglarme para mi esposa como me gusta que ella se arregle para mí», citando 2:228.', src: 'Tafsir At-Tabari, 2:228' },
+
+  { group: 'incorrecto', title: 'La violencia', text: 'De quienes pegaban a sus esposas, el Profeta ﷺ dijo: «No son los mejores de vosotros». Y él nunca lo hizo.', src: 'Abu Dawud 2146; Muslim 2328' },
+  { group: 'incorrecto', title: 'Insultar o humillar', text: 'Ni en privado ni delante de otros. «El creyente no es difamador, ni maldice, ni es grosero.»', src: 'Abu Dawud 2142; At-Tirmidhi 1977' },
+  { group: 'incorrecto', title: 'Divulgar las intimidades', text: 'Contar a amigos o familia lo que ocurre en la intimidad o los defectos del cónyuge.', src: 'Muslim 1437' },
+  { group: 'incorrecto', title: 'Tomar su dinero', text: 'Quedarse con la dote, el sueldo o la herencia de ella sin su permiso.', src: 'Corán 4:4, 4:20' },
+  { group: 'incorrecto', title: 'El abandono y el silencio largo', text: 'Dejar de hablar al otro como castigo. Ni siquiera entre musulmanes en general se permite más de tres días.', src: 'Al-Bujari 6077' },
+  { group: 'incorrecto', title: 'Lo prohibido en la intimidad', text: 'Las relaciones durante la regla o el posparto, y por vía anal.', src: 'Corán 2:222; Abu Dawud 2162' },
+  { group: 'incorrecto', title: 'Obligar a casarse', text: 'Un matrimonio sin el consentimiento de ella no es válido y puede anularse.', src: 'Al-Bujari 5138' },
+  { group: 'incorrecto', title: 'La injusticia entre esposas', text: 'Favorecer a una sobre otra en tiempo o gasto.', src: 'Abu Dawud 2133' },
 ];

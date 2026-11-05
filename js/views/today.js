@@ -1,7 +1,7 @@
 import { getState, update } from '../store.js';
 import { PRAYERS, dateKey } from '../prayer-times.js';
-import { esc, icon, haptic, toast } from '../ui.js';
-import { timesFor, todayDate, todayKey, fmtTime, nextPrayer, currentPrayerId, countdown, hijri, gregorian, dayScore, streak, isPeriod, isFemale, materializePeriod, periodStats, monthPct, scheduleReminders } from '../core.js';
+import { esc, icon, haptic, toast, openSheet, closeSheet } from '../ui.js';
+import { timesFor, todayDate, todayKey, fmtTime, nextPrayer, currentPrayerId, countdown, hijri, gregorian, dayScore, streak, isPeriod, isFemale, materializePeriod, periodStats, monthPct, fastSuggestion, fastLabel, toggleFast, FAST_TYPES, scheduleReminders } from '../core.js';
 import { openLocation, openSettings, openQibla } from './settings.js';
 import { renderCalendar, bindCalendar } from './calendar.js';
 import { POSTS } from '../data/learn.js';
@@ -46,6 +46,13 @@ export function mount(root) {
       update((s) => { s.profile.gender = g; s.profile.newMuslim = nm; s.profile.onboarded = true; });
       render();
       if (!getState().location) openLocation();
+    } else if (act === 'fast') {
+      let on;
+      update((s) => { on = toggleFast(s, todayKey()); });
+      haptic(on ? 12 : 6); render();
+      if (on) toast('Ayuno registrado. Que Allah te lo acepte.');
+    } else if (act === 'fast-more') {
+      openFastSheet(render);
     } else if (act === 'period-start') {
       update((s) => { s.period.ongoing = todayKey(); });
       haptic(10); render();
@@ -203,6 +210,8 @@ function view() {
       <div class="stat"><b class="num">${monthPct(today.y, today.m)}%</b><span>Este mes</span></div>
     </div>
 
+    ${fastCard(key, excused)}
+
     ${s.profile.newMuslim ? pathCard() : ''}
 
     <h2 class="section">Calendario</h2>
@@ -211,6 +220,54 @@ function view() {
     <h2 class="section">Para hoy</h2>
     ${dailyVerse()}
   `;
+}
+
+function fastCard(key, excused) {
+  const s = getState();
+  const f = s.fasts[key];
+  const sug = fastSuggestion(key);
+  const forbidden = sug.type === null;
+  let sub = f ? `${fastLabel(f.type)} · registrado` : sug.text;
+  if (!f && excused) sub = sug.type === 'ramadan' ? 'Con la regla no se ayuna; recupera este día después' : 'Con la regla no se ayuna';
+  const qada = s.qada ? ` · <b class="num">${s.qada}</b> por recuperar` : '';
+  return `<section class="fast-card ${f ? 'on' : ''}" aria-label="Ayuno de hoy">
+    <div class="grow"><div style="font-weight:600">${f ? 'He ayunado hoy' : '¿Ayunas hoy?'}</div><div class="small muted">${esc(sub)}${qada}</div></div>
+    <button class="icon-btn" data-act="fast-more" aria-label="Tipo de ayuno y días por recuperar">${icon('sliders')}</button>
+    <button class="check" data-act="fast" aria-pressed="${!!f}" ${(forbidden || excused) && !f ? 'disabled' : ''} aria-label="${f ? 'Quitar ayuno de hoy' : 'Marcar hoy como ayunado'}">${icon('check')}</button>
+  </section>`;
+}
+
+function openFastSheet(rerender) {
+  const key = todayKey();
+  const body = () => {
+    const s = getState();
+    const f = s.fasts[key];
+    return `
+      <p class="muted" style="margin:-4px 0 14px">${esc(fastSuggestion(key).text)}</p>
+      <div class="list">${FAST_TYPES.map((t) => `<button class="list-row" data-type="${t.id}"><div class="grow">${t.label}</div>${f?.type === t.id ? icon('check') : ''}</button>`).join('')}</div>
+      <p class="help" style="margin-top:8px">Elige el tipo para marcar hoy como ayunado. Si eliges «Recuperación», se descuenta un día de los pendientes.</p>
+      <h3 class="group">Días de Ramadán por recuperar</h3>
+      <div class="card row" style="justify-content:space-between">
+        <button class="icon-btn" data-qada="-1" aria-label="Uno menos">−</button>
+        <b class="num" style="font:500 34px/1 var(--font-display)">${s.qada || 0}</b>
+        <button class="icon-btn" data-qada="1" aria-label="Uno más">${icon('plus')}</button>
+      </div>
+      <p class="help" style="margin-top:10px">Los días que no ayunaste en Ramadán por enfermedad, viaje, regla o embarazo se recuperan antes del siguiente Ramadán (Corán 2:184).</p>
+      ${f ? '<button class="btn danger block" data-unfast style="margin-top:6px">Quitar el ayuno de hoy</button>' : ''}`;
+  };
+  openSheet('Ayuno', body(), (root) => {
+    root.addEventListener('click', (e) => {
+      const b = e.target.closest('button');
+      if (!b) return;
+      if (b.dataset.type) update((s) => { if (s.fasts[key]?.type !== b.dataset.type) toggleFast(s, key, b.dataset.type); });
+      else if (b.dataset.qada) update((s) => { s.qada = Math.max(0, (s.qada || 0) + Number(b.dataset.qada)); });
+      else if ('unfast' in b.dataset) update((s) => { toggleFast(s, key); });
+      else return;
+      haptic(8);
+      root.innerHTML = body();
+      rerender();
+    });
+  });
 }
 
 function pathCard() {

@@ -1,6 +1,6 @@
 // "Mi guía": obligations, rights, prohibited and permitted — filtered by gender.
 import { getState, update } from '../store.js';
-import { GUIDE, GUIDE_SECTIONS, GUIDE_NOTE, PERIOD_INFO } from '../data/guide.js';
+import { GUIDE, GUIDE_SECTIONS, GUIDE_NOTE, PERIOD_INFO, MARRIAGE, MARRIAGE_GROUPS } from '../data/guide.js';
 import { esc } from '../ui.js';
 import { periodStats } from '../core.js';
 
@@ -24,7 +24,7 @@ export function mount(root) {
         ${GUIDE_SECTIONS.map((s) => `<button class="chip" data-sec="${s.id}" aria-pressed="${s.id === section}">${s.label}</button>`).join('')}
         ${g === 'f' ? `<button class="chip" data-sec="regla" aria-pressed="${section === 'regla'}">La regla</button>` : ''}
       </div>
-      ${section === 'regla' ? periodView() : `
+      ${section === 'regla' ? periodView() : section === 'matrimonio' ? marriageView(g) : `
       <p class="muted" style="margin:6px 2px 14px">${esc(sec.intro)}</p>
       ${mine.length ? `<h2 class="section" style="margin-top:8px">Como ${who}</h2>${list(mine)}` : ''}
       <h2 class="section">Para todo musulmán</h2>${list(common)}`}
@@ -32,6 +32,17 @@ export function mount(root) {
   };
 
   const list = (arr) => `<div class="list">${arr.map((x) => `<div class="guide-item"><b>${esc(x.title)}</b><p>${esc(x.text)}</p><span class="src">${esc(x.src)}</span></div>`).join('')}</div>`;
+
+  const marriageView = (g) => {
+    // Put the spouse's own obligations first
+    const order = g === 'f' ? ['base', 'esposo', 'esposa', 'mutuos', 'profeta', 'modestia', 'correcto', 'incorrecto'] : ['base', 'esposa', 'esposo', 'mutuos', 'profeta', 'modestia', 'correcto', 'incorrecto'];
+    return `<p class="muted" style="margin:6px 2px 6px">${esc(GUIDE_SECTIONS.find((s) => s.id === 'matrimonio').intro)}</p>
+      ${order.map((id) => {
+        const grp = MARRIAGE_GROUPS.find((x) => x.id === id);
+        const items = MARRIAGE.filter((x) => x.group === id);
+        return `<h2 class="section">${esc(grp.label)}</h2><div class="list ${id === 'incorrecto' ? 'list-bad' : id === 'correcto' ? 'list-good' : ''}">${items.map((x) => `<div class="guide-item"><b>${esc(x.title)}</b>${x.ar ? `<p class="ar" lang="ar" style="font-size:20px;color:var(--ink);margin:2px 0 6px">${esc(x.ar)}</p>` : ''}<p>${esc(x.text)}</p><span class="src">${esc(x.src)}</span></div>`).join('')}</div>`;
+      }).join('')}`;
+  };
 
   const periodView = () => {
     const st = periodStats();

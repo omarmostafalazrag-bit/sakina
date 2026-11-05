@@ -2,7 +2,7 @@
 import { getState, update } from '../store.js';
 import { PRAYERS, dateKey, parseKey } from '../prayer-times.js';
 import { icon, openSheet, haptic } from '../ui.js';
-import { todayDate, todayKey, dayScore, isPeriod, isFemale, materializePeriod, monthPct, hijriSpan, hijri, cap } from '../core.js';
+import { todayDate, todayKey, dayScore, isPeriod, isFemale, materializePeriod, monthPct, hijriSpan, hijri, cap, monthFasts, toggleFast, fastLabel, FAST_TYPES } from '../core.js';
 
 let cal = null; // { y, m } currently shown
 
@@ -30,7 +30,8 @@ export function renderCalendar() {
     if (n === 5) full++;
     if (per) periodDays++;
     const label = `${d} de ${monthName(y, m).toLowerCase()}: ${future ? 'aún no ha llegado' : per ? 'periodo' : `${n} de 5 oraciones`}`;
-    cells.push(`<button class="cday ${future ? 'future' : ''} ${k === tk ? 'today' : ''} ${per ? 'period' : ''}" data-l="${per ? 0 : n}" data-day="${k}" ${future ? 'disabled' : ''} aria-label="${label}"><span>${d}</span></button>`);
+    const fasted = !!getState().fasts[k];
+    cells.push(`<button class="cday ${future ? 'future' : ''} ${k === tk ? 'today' : ''} ${per ? 'period' : ''} ${fasted ? 'fasted' : ''}" data-l="${per ? 0 : n}" data-day="${k}" ${future ? 'disabled' : ''} aria-label="${label}${fasted ? ', ayunado' : ''}"><span>${d}</span></button>`);
   }
 
   return `<div class="card cal">
@@ -41,9 +42,9 @@ export function renderCalendar() {
     </div>
     <div class="cal-grid">${cells.join('')}</div>
     <div class="cal-foot">
-      <span><b class="num">${monthPct(y, m)}%</b> de oraciones · <b class="num">${full}</b> ${full === 1 ? 'día completo' : 'días completos'}${female && periodDays ? ` · <b class="num">${periodDays}</b> de periodo` : ''}</span>
+      <span><b class="num">${monthPct(y, m)}%</b> de oraciones · <b class="num">${full}</b> ${full === 1 ? 'día completo' : 'días completos'}${female && periodDays ? ` · <b class="num">${periodDays}</b> de periodo` : ''} · <b class="num">${monthFasts(y, m)}</b> de ayuno</span>
     </div>
-    <div class="legend">0 <i style="background:var(--surface-2)"></i><i style="background:color-mix(in oklab,var(--accent) 42%,var(--surface-2))"></i><i style="background:color-mix(in oklab,var(--accent) 80%,var(--surface-2))"></i><i style="background:var(--accent)"></i> 5${female ? ' <i class="lg-period"></i> periodo' : ''}</div>
+    <div class="legend">0 <i style="background:var(--surface-2)"></i><i style="background:color-mix(in oklab,var(--accent) 42%,var(--surface-2))"></i><i style="background:color-mix(in oklab,var(--accent) 80%,var(--surface-2))"></i><i style="background:var(--accent)"></i> 5${female ? ' <i class="lg-period"></i> periodo' : ''} <i class="lg-fast"></i> ayuno</div>
     <p class="help" style="margin:10px 0 0">Toca un día para marcar las oraciones que rezaste${female ? ' o los días de periodo' : ''}.</p>
   </div>`;
 }
@@ -79,6 +80,9 @@ function openDay(key, rerender) {
       <p class="muted" style="margin:-4px 0 14px">${hijri(dt).es}</p>
       ${female ? `<div class="list" style="margin-bottom:14px"><label class="list-row"><div class="grow"><div>Día de periodo</div><div class="meta">Estás exenta de rezar este día</div></div>
         <span class="switch"><input type="checkbox" data-period ${per ? 'checked' : ''} aria-label="Día de periodo" /><span></span></span></label></div>` : ''}
+      <div class="list" style="margin-bottom:14px"><label class="list-row"><div class="grow"><div>Ayuné este día</div><div class="meta">${getState().fasts[key] ? fastLabel(getState().fasts[key].type) : 'Ramadán, voluntario, recuperación…'}</div></div>
+        <span class="switch"><input type="checkbox" data-fast ${getState().fasts[key] ? 'checked' : ''} aria-label="Ayuné este día" /><span></span></span></label>
+        ${getState().fasts[key] ? `<div class="list-row"><div class="grow">Tipo</div><select class="input" style="width:auto;min-height:40px" data-fasttype>${FAST_TYPES.map((t) => `<option value="${t.id}" ${getState().fasts[key].type === t.id ? 'selected' : ''}>${t.label}</option>`).join('')}</select></div>` : ''}</div>
       <div class="list" ${per ? 'style="opacity:.45;pointer-events:none"' : ''}>
         ${PRAYERS.map((p) => {
           const r = rec[p.id] || {};
@@ -105,6 +109,14 @@ function openDay(key, rerender) {
       haptic(8); refresh(); rerender();
     });
     root.addEventListener('change', (e) => {
+      if (e.target.matches('[data-fast]')) {
+        update((s) => { toggleFast(s, key); });
+        haptic(8); refresh(); rerender(); return;
+      }
+      if (e.target.matches('[data-fasttype]')) {
+        update((s) => { toggleFast(s, key, e.target.value); });
+        refresh(); rerender(); return;
+      }
       if (!e.target.matches('[data-period]')) return;
       const on = e.target.checked;
       update((s) => {

@@ -1,5 +1,5 @@
 // Offline-first service worker. Bump VERSION when shipping changes.
-const VERSION = 'sakina-v2';
+const VERSION = 'sakina-v3';
 const SHELL = [
   './', 'index.html', 'styles.css', 'manifest.webmanifest',
   'js/app.js', 'js/store.js', 'js/ui.js', 'js/core.js', 'js/prayer-times.js',

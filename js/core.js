@@ -219,3 +219,49 @@ export function hijriSpan(y, m) {
   const ya = ma.split(' ').pop(), yb = mb.split(' ').pop();
   return ya === yb ? `${ma.replace(/ \d+$/, '')} – ${mb}` : `${ma} – ${mb}`;
 }
+
+/* ---------------- Fasting ---------------- */
+export const FAST_TYPES = [
+  { id: 'ramadan', label: 'Ramadán' },
+  { id: 'sunnah', label: 'Voluntario (sunnah)' },
+  { id: 'qada', label: 'Recuperación (qada)' },
+  { id: 'nadhr', label: 'Promesa o expiación' },
+];
+export const fastLabel = (id) => FAST_TYPES.find((t) => t.id === id)?.label || 'Ayuno';
+
+/** Why today is a good day to fast, if it is: { type, text }. */
+export function fastSuggestion(key = todayKey()) {
+  const dt = new Date(key + 'T12:00:00Z');
+  const h = hijri(dt);
+  const dow = dt.getUTCDay();
+  if (h.month === 9) return { type: 'ramadan', text: `Ramadán, día ${h.day}` };
+  if (h.month === 10 && h.day === 1) return { type: null, text: 'Hoy es Eid al-Fitr: está prohibido ayunar' };
+  if (h.month === 12 && h.day === 10) return { type: null, text: 'Hoy es Eid al-Adha: está prohibido ayunar' };
+  if (h.month === 12 && (h.day === 11 || h.day === 12 || h.day === 13)) return { type: null, text: 'Días de Tashriq: no se ayuna' };
+  if (h.month === 12 && h.day === 9) return { type: 'sunnah', text: 'Día de Arafat: su ayuno expía dos años (Muslim 1162)' };
+  if (h.month === 1 && (h.day === 9 || h.day === 10)) return { type: 'sunnah', text: 'Ashura: su ayuno expía el año anterior (Muslim 1162)' };
+  if (h.month === 10 && h.day > 1) return { type: 'sunnah', text: 'Shawwal: seis días de ayuno tras Ramadán (Muslim 1164)' };
+  if (h.day >= 13 && h.day <= 15) return { type: 'sunnah', text: 'Días blancos (13, 14 y 15 del mes lunar)' };
+  if (dow === 1) return { type: 'sunnah', text: 'Lunes: ayuno sunnah' };
+  if (dow === 4) return { type: 'sunnah', text: 'Jueves: ayuno sunnah' };
+  return { type: 'sunnah', text: 'Puedes ofrecer un ayuno voluntario' };
+}
+
+export function toggleFast(s, key, type) {
+  const cur = s.fasts[key];
+  if (cur && (!type || cur.type === type)) {
+    if (cur.type === 'qada') s.qada = (s.qada || 0) + 1; // undo a make-up day
+    delete s.fasts[key];
+    return false;
+  }
+  if (cur?.type === 'qada') s.qada = (s.qada || 0) + 1;
+  const t = type || fastSuggestion(key).type || 'sunnah';
+  s.fasts[key] = { type: t };
+  if (t === 'qada') s.qada = Math.max(0, (s.qada || 0) - 1);
+  return true;
+}
+
+export function monthFasts(y, m) {
+  const pre = `${y}-${String(m).padStart(2, '0')}-`;
+  return Object.keys(getState().fasts).filter((k) => k.startsWith(pre)).length;
+}

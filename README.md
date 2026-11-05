@@ -5,7 +5,8 @@ Tu compañero diario para la práctica del islam: una app web instalable (PWA) q
 ## Qué incluye
 
 - **Hoy**: horarios de rezo calculados en el dispositivo para tu ubicación (GPS o búsqueda de ciudad), próxima oración con cuenta atrás, registro de las cinco oraciones (y si fue en congregación), racha y fecha hégira.
-- **Calendario mensual**: navega mes a mes, ve qué días completaste y toca un día para marcar las oraciones que rezaste.
+- **Calendario mensual**: navega mes a mes, ve qué días completaste y toca un día para marcar las oraciones que rezaste y si ayunaste.
+- **Ayuno**: marca cada día como ayunado (Ramadán, voluntario, recuperación o promesa), sugerencias de días sunnah (lunes, jueves, días blancos, Arafat, Ashura) y contador de días de Ramadán por recuperar.
 - **Perfil hombre / mujer**: para la mujer, seguimiento de la regla: pausa las oraciones esos días (sin romper la racha), los marca en el calendario, calcula duración media, ciclo y fecha prevista.
 - **Qibla**: dirección y distancia a La Meca, con brújula en vivo.
 - **Duas**: más de 70 súplicas del Corán y la Sunnah con árabe, transliteración, traducción y fuente. Búsqueda por necesidad con sinónimos («finanzas» encuentra deudas y sustento).
@@ -14,8 +15,8 @@ Tu compañero diario para la práctica del islam: una app web instalable (PWA) q
   - *Lecturas*: casi 90 textos de Corán, hadices, sira, profetas, sunnah y fundamentos.
   - *Empezar*: 15 lecciones para nuevos musulmanes, de la shahada a cómo rezar paso a paso y Al-Fatiha palabra por palabra.
   - *Árabe*: curso desde cero (alfabeto con sus formas, vocales, reglas de lectura y vocabulario), con audio y dos juegos de práctica.
-  - *Mi guía*: obligaciones, derechos, lo prohibido y lo permitido según seas hombre o mujer, con fuentes.
-- **Sadaqa**: registro de donaciones, totales, desglose por tipo, exportación CSV y calculadora de zakat.
+  - *Mi guía*: obligaciones, derechos, lo prohibido y lo permitido según seas hombre o mujer, y un apartado de matrimonio: derechos de cada cónyuge, cómo trataba el Profeta ﷺ a sus esposas, modestia, y lo correcto y lo incorrecto. Todo con fuentes.
+- **Sadaqa**: registro de donaciones en dinero y de buenas obras no monetarias (voluntariado, comida, ayuda, horas dedicadas…), totales, desglose por tipo, exportación CSV y calculadora de zakat.
 - **Recordatorios**: notificaciones y exportación de 30 días de horarios a tu calendario (.ics) con alarma.
 - **Ajustes**: 12 métodos de cálculo, Asr estándar o hanafi, ajuste por minutos, tema claro u oscuro, perfil y copia de seguridad.
 

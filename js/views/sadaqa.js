@@ -11,6 +11,21 @@ export const TYPES = [
   { id: 'otro', label: 'Otro' },
 ];
 const typeLabel = (id) => TYPES.find((t) => t.id === id)?.label || 'Otro';
+
+// Non-monetary sadaqa: «Toda buena obra es sadaqa» (Al-Bujari 6021)
+export const ACTS = [
+  { id: 'tiempo', label: 'Voluntariado' },
+  { id: 'comida', label: 'Dar de comer' },
+  { id: 'objetos', label: 'Ropa u objetos' },
+  { id: 'ayuda', label: 'Ayudar a alguien' },
+  { id: 'visita', label: 'Visitar a un enfermo' },
+  { id: 'ensenar', label: 'Enseñar o aconsejar' },
+  { id: 'palabra', label: 'Sonrisa o buena palabra' },
+  { id: 'sangre', label: 'Donar sangre' },
+  { id: 'otro', label: 'Otra buena obra' },
+];
+const actLabel = (id) => ACTS.find((t) => t.id === id)?.label || 'Buena obra';
+const isAct = (d) => d.kind === 'act';
 const CURRENCIES = ['EUR', 'USD', 'GBP', 'MAD', 'DZD', 'TND', 'EGP', 'SAR', 'AED', 'TRY', 'MXN', 'ARS', 'CHF'];
 
 export function mount(root) {
@@ -19,13 +34,15 @@ export function mount(root) {
     const cur = settings.currency;
     const now = new Date(todayKey());
     const y = now.getUTCFullYear(), m = now.getUTCMonth();
-    const inCur = sadaqa.filter((d) => d.currency === cur);
+    const inCur = sadaqa.filter((d) => !isAct(d) && d.currency === cur);
+    const actsYear = sadaqa.filter((d) => isAct(d) && +d.date.slice(0, 4) === y);
+    const hours = actsYear.reduce((n, d) => n + (d.hours || 0), 0);
     const sum = (arr) => arr.reduce((n, d) => n + d.amount, 0);
     const yearList = inCur.filter((d) => +d.date.slice(0, 4) === y);
     const monthList = yearList.filter((d) => +d.date.slice(5, 7) === m + 1);
     const byType = TYPES.map((t) => ({ ...t, v: sum(yearList.filter((d) => d.type === t.id)) })).filter((t) => t.v > 0).sort((a, b) => b.v - a.v);
     const max = byType[0]?.v || 1;
-    const others = [...new Set(sadaqa.map((d) => d.currency))].filter((c) => c !== cur);
+    const others = [...new Set(sadaqa.filter((d) => !isAct(d)).map((d) => d.currency))].filter((c) => c !== cur);
 
     // Group history by month
     const sorted = [...sadaqa].sort((a, b) => b.date.localeCompare(a.date) || b.created - a.created);
@@ -39,16 +56,16 @@ export function mount(root) {
     root.innerHTML = `
       <header class="page-head"><div>
         <h1 class="page-title">Sadaqa</h1>
-        <p class="page-sub">Lleva la cuenta de lo que das. Solo lo ves tú.</p>
+        <p class="page-sub">Lo que das, en dinero o en buenas obras. Solo lo ves tú.</p>
       </div>
       <button class="icon-btn" data-zakat aria-label="Calculadora de zakat">${icon('calc')}</button></header>
 
       <section class="total-card" aria-label="Resumen">
-        <div class="label">Dado en ${y}</div>
+        <div class="label">Dado en ${y} · ${yearList.length} ${yearList.length === 1 ? 'donación' : 'donaciones'}</div>
         <div class="amount">${money(sum(yearList), cur)}</div>
         <div class="split">
           <div><b>${money(sum(monthList), cur)}</b><span>${cap(new Intl.DateTimeFormat('es-ES', { month: 'long', timeZone: 'UTC' }).format(now))}</span></div>
-          <div><b class="num">${yearList.length}</b><span>${yearList.length === 1 ? 'Donación este año' : 'Donaciones este año'}</span></div>
+          <div><b class="num">${actsYear.length}${hours ? ` · ${hours} h` : ''}</b><span>${actsYear.length === 1 ? 'Buena obra este año' : 'Buenas obras este año'}</span></div>
         </div>
       </section>
       ${others.length ? `<p class="small muted" style="margin:8px 4px 0">También tienes donaciones en ${others.join(', ')}. El resumen muestra ${cur}; cámbialo al añadir una nueva.</p>` : ''}
@@ -61,21 +78,22 @@ export function mount(root) {
         <div class="month-head"><span>${cap(new Intl.DateTimeFormat('es-ES', { month: 'long', timeZone: 'UTC' }).format(new Date(k + '-01')))} ${k.slice(0, 4)}</span>
           <span class="num">${monthTotals(list)}</span></div>
         <div class="list">${list.map((d) => `
-          <button class="list-row" data-edit="${d.id}">
-            <div class="grow"><div>${esc(d.to || typeLabel(d.type))}</div>
-              <div class="meta">${typeLabel(d.type)} · ${new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'short', timeZone: 'UTC' }).format(new Date(d.date))}${d.note ? ' · ' + esc(d.note) : ''}</div></div>
-            <span class="don-amount">${money(d.amount, d.currency)}</span>
+          <button class="list-row ${isAct(d) ? 'is-act' : ''}" data-edit="${d.id}">
+            <div class="grow"><div>${esc(d.to || (isAct(d) ? actLabel(d.act) : typeLabel(d.type)))}</div>
+              <div class="meta">${isAct(d) ? actLabel(d.act) : typeLabel(d.type)} · ${new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'short', timeZone: 'UTC' }).format(new Date(d.date))}${d.note ? ' · ' + esc(d.note) : ''}</div></div>
+            ${isAct(d) ? `<span class="act-badge">${d.hours ? `${d.hours} h` : icon('heart')}</span>` : `<span class="don-amount">${money(d.amount, d.currency)}</span>`}
           </button>`).join('')}</div>`).join('')
         + `<button class="btn ghost block" style="margin-top:16px" data-csv>${icon('download')}Exportar a hoja de cálculo (CSV)</button>`
-      : `<div class="empty"><h3>Tu primera sadaqa</h3><p>«La caridad no disminuye la riqueza» (Muslim 2588). Apunta aquí cada donación: a quién, cuánto y de qué tipo.</p></div>`}
+      : `<div class="empty"><h3>Tu primera sadaqa</h3><p>«La caridad no disminuye la riqueza» (Muslim 2588). Apunta aquí cada donación y también tus buenas obras: «Toda buena obra es sadaqa» (Al-Bujari 6021).</p></div>`}
 
       <button class="fab" data-add>${icon('plus')}Añadir</button>`;
   };
 
   const monthTotals = (list) => {
     const by = {};
-    for (const d of list) by[d.currency] = (by[d.currency] || 0) + d.amount;
-    return Object.entries(by).map(([c, v]) => money(v, c)).join(' · ');
+    let acts = 0;
+    for (const d of list) { if (isAct(d)) acts++; else by[d.currency] = (by[d.currency] || 0) + d.amount; }
+    return [...Object.entries(by).map(([c, v]) => money(v, c)), acts ? `${acts} ${acts === 1 ? 'obra' : 'obras'}` : ''].filter(Boolean).join(' · ');
   };
 
   const onClick = (e) => {
@@ -95,11 +113,17 @@ export function mount(root) {
 function openForm(id, onDone) {
   const st = getState();
   const existing = id ? st.sadaqa.find((d) => d.id === id) : null;
-  const d = existing || { amount: '', currency: st.settings.currency, date: todayKey(), type: 'sadaqa', to: '', note: '' };
+  const d = existing || { kind: 'money', amount: '', currency: st.settings.currency, date: todayKey(), type: 'sadaqa', act: 'tiempo', to: '', note: '', hours: '' };
+  let kind = d.kind === 'act' ? 'act' : 'money';
   const recent = [...new Set(st.sadaqa.map((x) => x.to).filter(Boolean))].slice(-12);
 
-  openSheet(existing ? 'Editar donación' : 'Nueva donación', `
+  openSheet(existing ? 'Editar sadaqa' : 'Nueva sadaqa', `
     <form data-form novalidate>
+      <div class="seg" role="group" aria-label="Clase de sadaqa" style="margin-bottom:16px">
+        <button type="button" data-kind="money" aria-pressed="${kind === 'money'}">Dinero</button>
+        <button type="button" data-kind="act" aria-pressed="${kind === 'act'}">Buena obra</button>
+      </div>
+      <div data-money ${kind === 'act' ? 'hidden' : ''}>
       <div class="row" style="align-items:flex-end;gap:10px">
         <label class="field grow"><span>Cantidad</span>
           <input class="input num" name="amount" type="number" inputmode="decimal" min="0" step="0.01" required placeholder="0,00" value="${d.amount}" style="font-size:22px;font-weight:600" /></label>
@@ -111,18 +135,41 @@ function openForm(id, onDone) {
         <div class="chips" role="radiogroup" aria-label="Tipo" style="margin-bottom:0">
           ${TYPES.map((t) => `<button type="button" class="chip" role="radio" data-type="${t.id}" aria-pressed="${t.id === d.type}" aria-checked="${t.id === d.type}">${t.label}</button>`).join('')}
         </div></div>
-      <label class="field"><span>A quién o a qué</span>
+      </div>
+      <div data-act ${kind === 'money' ? 'hidden' : ''}>
+        <div class="field"><span>¿Qué hiciste?</span>
+          <div class="chips" role="radiogroup" aria-label="Buena obra" style="margin-bottom:0;flex-wrap:wrap;overflow:visible">
+            ${ACTS.map((t) => `<button type="button" class="chip" role="radio" data-actid="${t.id}" aria-pressed="${t.id === d.act}" aria-checked="${t.id === d.act}">${t.label}</button>`).join('')}
+          </div></div>
+        <label class="field"><span>Horas dedicadas (opcional)</span>
+          <input class="input num" name="hours" type="number" inputmode="decimal" min="0" step="0.5" placeholder="0" value="${d.hours || ''}" /></label>
+        <p class="help">«Toda buena obra es sadaqa» (Al-Bujari 6021): tu tiempo, tu comida, tu ayuda y hasta tu sonrisa cuentan.</p>
+      </div>
+      <label class="field"><span data-tolabel>${kind === 'act' ? 'Descripción o a quién' : 'A quién o a qué'}</span>
         <input class="input" name="to" list="sadaqa-recent" placeholder="Mezquita, ONG, una persona…" value="${esc(d.to)}" autocomplete="off" />
         <datalist id="sadaqa-recent">${recent.map((r) => `<option value="${esc(r)}">`).join('')}</datalist></label>
       <div class="grid-2">
         <label class="field"><span>Fecha</span><input class="input" type="date" name="date" value="${d.date}" max="${todayKey()}" required /></label>
         <label class="field"><span>Nota (opcional)</span><input class="input" name="note" value="${esc(d.note)}" placeholder="Por mis padres…" /></label>
       </div>
-      <button class="btn block" type="submit" style="margin-top:6px">${existing ? 'Guardar cambios' : 'Guardar donación'}</button>
+      <button class="btn block" type="submit" style="margin-top:6px">${existing ? 'Guardar cambios' : 'Guardar'}</button>
       ${existing ? `<button class="btn danger block" type="button" data-del style="margin-top:10px">${icon('trash')}Eliminar</button>` : ''}
     </form>`, (root) => {
     const form = root.querySelector('[data-form]');
-    let type = d.type;
+    let type = d.type || 'sadaqa';
+    let act = d.act || 'tiempo';
+    root.querySelectorAll('[data-kind]').forEach((b) => b.addEventListener('click', () => {
+      kind = b.dataset.kind;
+      root.querySelectorAll('[data-kind]').forEach((x) => x.setAttribute('aria-pressed', x === b));
+      root.querySelector('[data-money]').hidden = kind !== 'money';
+      root.querySelector('[data-act]').hidden = kind !== 'act';
+      root.querySelector('[data-tolabel]').textContent = kind === 'act' ? 'Descripción o a quién' : 'A quién o a qué';
+      form.to.placeholder = kind === 'act' ? 'Banco de alimentos, mi vecino, la mezquita…' : 'Mezquita, ONG, una persona…';
+    }));
+    root.querySelectorAll('[data-actid]').forEach((c) => c.addEventListener('click', () => {
+      act = c.dataset.actid;
+      root.querySelectorAll('[data-actid]').forEach((x) => { x.setAttribute('aria-pressed', x === c); x.setAttribute('aria-checked', x === c); });
+    }));
     root.querySelectorAll('[data-type]').forEach((c) => c.addEventListener('click', () => {
       type = c.dataset.type;
       root.querySelectorAll('[data-type]').forEach((x) => { x.setAttribute('aria-pressed', x === c); x.setAttribute('aria-checked', x === c); });
@@ -130,32 +177,41 @@ function openForm(id, onDone) {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       const f = new FormData(form);
-      const amount = Math.round(parseFloat(String(f.get('amount')).replace(',', '.')) * 100) / 100;
-      if (!(amount > 0)) { root.querySelector('[data-err]').hidden = false; form.amount.focus(); return; }
-      const rec = { amount, currency: f.get('currency'), date: f.get('date') || todayKey(), type, to: String(f.get('to')).trim(), note: String(f.get('note')).trim() };
+      const base = { date: f.get('date') || todayKey(), to: String(f.get('to')).trim(), note: String(f.get('note')).trim() };
+      let rec;
+      if (kind === 'act') {
+        const hours = Math.max(0, Math.round((parseFloat(String(f.get('hours')).replace(',', '.')) || 0) * 2) / 2);
+        rec = { ...base, kind: 'act', act, hours, amount: 0, currency: null, type: null };
+      } else {
+        const amount = Math.round(parseFloat(String(f.get('amount')).replace(',', '.')) * 100) / 100;
+        if (!(amount > 0)) { root.querySelector('[data-err]').hidden = false; form.amount.focus(); return; }
+        rec = { ...base, kind: 'money', amount, currency: f.get('currency'), type, act: null, hours: null };
+      }
       update((s) => {
-        s.settings.currency = rec.currency;
+        if (rec.currency) s.settings.currency = rec.currency;
         if (existing) Object.assign(s.sadaqa.find((x) => x.id === id), rec);
         else s.sadaqa.push({ id: uid(), created: Date.now(), ...rec });
       });
       haptic(12);
       closeSheet(); onDone();
-      toast(existing ? 'Donación actualizada' : 'Que Allah la acepte');
+      toast(existing ? 'Sadaqa actualizada' : 'Que Allah te lo acepte');
     });
     root.querySelector('[data-del]')?.addEventListener('click', () => {
-      if (!confirm('¿Eliminar esta donación del registro?')) return;
+      if (!confirm('¿Eliminar esta sadaqa del registro?')) return;
       update((s) => { s.sadaqa = s.sadaqa.filter((x) => x.id !== id); });
       closeSheet(); onDone();
-      toast('Donación eliminada');
+      toast('Eliminada del registro');
     });
-    if (!existing) setTimeout(() => form.amount.focus({ preventScroll: true }), 380);
+    if (!existing && kind === 'money') setTimeout(() => form.amount.focus({ preventScroll: true }), 380);
   });
 }
 
 function exportCsv() {
-  const rows = [['Fecha', 'Tipo', 'Destinatario', 'Cantidad', 'Moneda', 'Nota']];
+  const rows = [['Fecha', 'Clase', 'Tipo', 'Destinatario o descripción', 'Cantidad', 'Moneda', 'Horas', 'Nota']];
   for (const d of [...getState().sadaqa].sort((a, b) => a.date.localeCompare(b.date))) {
-    rows.push([d.date, typeLabel(d.type), d.to, String(d.amount).replace('.', ','), d.currency, d.note]);
+    rows.push(isAct(d)
+      ? [d.date, 'Buena obra', actLabel(d.act), d.to, '', '', d.hours ? String(d.hours).replace('.', ',') : '', d.note]
+      : [d.date, 'Dinero', typeLabel(d.type), d.to, String(d.amount).replace('.', ','), d.currency, '', d.note]);
   }
   const csv = '﻿' + rows.map((r) => r.map((c) => `"${String(c ?? '').replace(/"/g, '""')}"`).join(';')).join('\r\n');
   download(`sadaqa-${todayKey()}.csv`, csv, 'text/csv;charset=utf-8');

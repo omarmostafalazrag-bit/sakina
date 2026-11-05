@@ -8,6 +8,8 @@ const defaults = () => ({
   period: { days: {}, ongoing: null }, // days: { 'YYYY-MM-DD': true }, ongoing: start key while bleeding
   path: { done: [] },   // new-muslim lessons completed
   arabic: { done: [], best: {} },
+  fasts: {},           // 'YYYY-MM-DD': { type }
+  qada: 0,             // Ramadan days still to make up
   settings: {
     method: 'MWL',
     asr: 'standard',
