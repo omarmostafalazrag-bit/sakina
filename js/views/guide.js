@@ -35,12 +35,12 @@ export function mount(root) {
 
   const marriageView = (g) => {
     // Put the spouse's own obligations first
-    const order = g === 'f' ? ['base', 'esposo', 'esposa', 'mutuos', 'profeta', 'modestia', 'correcto', 'incorrecto'] : ['base', 'esposa', 'esposo', 'mutuos', 'profeta', 'modestia', 'correcto', 'incorrecto'];
+    const order = g === 'f' ? ['base', 'esposo', 'esposa', 'mutuos', 'profeta', 'modestia', 'correcto', 'incorrecto', 'injusticia'] : ['base', 'esposa', 'esposo', 'mutuos', 'profeta', 'modestia', 'correcto', 'incorrecto', 'injusticia'];
     return `<p class="muted" style="margin:6px 2px 6px">${esc(GUIDE_SECTIONS.find((s) => s.id === 'matrimonio').intro)}</p>
       ${order.map((id) => {
         const grp = MARRIAGE_GROUPS.find((x) => x.id === id);
         const items = MARRIAGE.filter((x) => x.group === id);
-        return `<h2 class="section">${esc(grp.label)}</h2><div class="list ${id === 'incorrecto' ? 'list-bad' : id === 'correcto' ? 'list-good' : ''}">${items.map((x) => `<div class="guide-item"><b>${esc(x.title)}</b>${x.ar ? `<p class="ar" lang="ar" style="font-size:20px;color:var(--ink);margin:2px 0 6px">${esc(x.ar)}</p>` : ''}<p>${esc(x.text)}</p><span class="src">${esc(x.src)}</span></div>`).join('')}</div>`;
+        return `<h2 class="section">${esc(grp.label)}</h2><div class="list ${id === 'incorrecto' ? 'list-bad' : id === 'correcto' ? 'list-good' : id === 'injusticia' ? 'list-help' : ''}">${items.map((x) => `<div class="guide-item"><b>${esc(x.title)}</b>${x.ar ? `<p class="ar" lang="ar" style="font-size:20px;color:var(--ink);margin:2px 0 6px">${esc(x.ar)}</p>` : ''}<p>${esc(x.text)}</p><span class="src">${esc(x.src)}</span></div>`).join('')}</div>`;
       }).join('')}`;
   };
 

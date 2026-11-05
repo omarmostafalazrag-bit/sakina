@@ -54,6 +54,9 @@ document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'visible') { scheduleReminders(); if (currentRoute === 'hoy') refresh(); }
 });
 
+// The AI advisor was removed: forget any key or chat a previous version stored
+try { localStorage.removeItem('sakina:apikey'); localStorage.removeItem('sakina:advisor'); } catch { /* storage blocked */ }
+
 applyTheme();
 initSheet();
 show(routeName(), { animate: false });

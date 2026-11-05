@@ -101,6 +101,7 @@ export const MARRIAGE_GROUPS = [
   { id: 'modestia', label: 'Modestia y pudor' },
   { id: 'correcto', label: 'Lo correcto' },
   { id: 'incorrecto', label: 'Lo incorrecto' },
+  { id: 'injusticia', label: 'Qué hacer si hay injusticia' },
 ];
 
 export const MARRIAGE = [
@@ -165,4 +166,29 @@ export const MARRIAGE = [
   { group: 'incorrecto', title: 'Lo prohibido en la intimidad', text: 'Las relaciones durante la regla o el posparto, y por vía anal.', src: 'Corán 2:222; Abu Dawud 2162' },
   { group: 'incorrecto', title: 'Obligar a casarse', text: 'Un matrimonio sin el consentimiento de ella no es válido y puede anularse.', src: 'Al-Bujari 5138' },
   { group: 'incorrecto', title: 'La injusticia entre esposas', text: 'Favorecer a una sobre otra en tiempo o gasto.', src: 'Abu Dawud 2133' },
+  { group: 'correcto', title: 'Cumplir lo pactado en el contrato', text: '«Las condiciones que más merecen cumplirse son aquellas con las que os habéis hecho lícitos el uno al otro.» Si se acordó que ella estudie, trabaje o viva cerca de su familia, se respeta.', src: 'Al-Bujari 2721; Muslim 1418' },
+  { group: 'correcto', title: 'Honrar a la familia del otro', text: 'Tratar con respeto a los suegros y cuñados, visitarles y no hablar mal de ellos. Es parte de mantener los lazos y del buen trato al cónyuge.', src: 'Corán 4:1, 4:36' },
+  { group: 'correcto', title: 'Darle tiempo y atención', text: 'Al hombre que ayunaba de día y rezaba toda la noche, el Profeta ﷺ le dijo: «Tu esposa tiene un derecho sobre ti». El trabajo, el móvil o incluso el exceso de adoración no deben quitar el tiempo de la familia.', src: 'Al-Bujari 1975, 5199' },
+  { group: 'correcto', title: 'Hablar en privado de los problemas', text: 'Los desacuerdos se tratan a solas, con calma y en el momento adecuado, no delante de los hijos, la familia o las redes.', src: 'Muslim 1437; Corán 4:35' },
+  { group: 'correcto', title: 'Ver lo bueno', text: 'Recordar las virtudes del otro cuando algo molesta: «si le disgusta un rasgo, le agradará otro».', src: 'Muslim 1469' },
+  { group: 'correcto', title: 'Cuidar la intimidad de los dos', text: 'Atender las necesidades del otro con cariño y sin egoísmo, preparar el ambiente y no tener prisa. Es un derecho de ambos y una sadaqa.', src: 'Muslim 1006; Corán 2:223' },
+
+  { group: 'incorrecto', title: 'Amenazar con el divorcio', text: 'Usar el talaq como arma en cada discusión, o pronunciarlo con enfado o tres veces de golpe. El Profeta ﷺ se enfadó mucho con quien divorció tres veces a la vez: «¿Se juega con el Libro de Allah estando yo entre vosotros?».', src: 'An-Nasa’i 3401; Corán 65:1, 2:231' },
+  { group: 'incorrecto', title: 'Controlar y aislar', text: 'Prohibir sin motivo ver a la familia o a las amigas, controlar cada gasto o cada paso. La autoridad (qiwama) es responsabilidad y servicio, no control.', src: 'Corán 4:34, 4:19; Al-Bujari 893' },
+  { group: 'incorrecto', title: 'Espiar el móvil', text: '«No os espiéis.» Revisar a escondidas los mensajes del otro rompe la confianza; si hay una sospecha seria, se habla.', src: 'Corán 49:12' },
+  { group: 'incorrecto', title: 'Compararle con otros', text: 'Comparar con otras mujeres u hombres, o con la vida que se ve en las redes, siembra ingratitud.', src: 'Al-Bujari 29; Corán 20:131' },
+  { group: 'incorrecto', title: 'Retener a la esposa para hacerle daño', text: '«No las retengáis para perjudicarlas.» Ni dejarla «colgada», sin ser esposa de verdad ni libre para casarse con otro.', src: 'Corán 2:231, 4:129' },
+  { group: 'incorrecto', title: 'Negarse a la intimidad para castigar', text: 'Usar la intimidad como premio o castigo, por cualquiera de los dos. Es un derecho mutuo.', src: 'Al-Bujari 5193; Corán 2:187' },
+  { group: 'incorrecto', title: 'Hablar mal del cónyuge a los hijos', text: 'Poner a los hijos en contra del padre o de la madre es injusticia con ellos y con el otro.', src: 'Corán 2:233' },
+
+  { group: 'injusticia', title: 'El islam no te pide aguantar el maltrato', text: '«No hay daño ni respuesta con daño.» La paciencia es una virtud, pero no obliga a soportar violencia, humillación o abuso. Protegerte es lícito y necesario.', src: 'Ibn Mayah 2341; Corán 2:231' },
+  { group: 'injusticia', title: 'Si hay violencia o peligro: primero tu seguridad', text: 'Sal del lugar, busca un sitio seguro y llama al 112. En España, el 016 atiende a víctimas de violencia de género las 24 horas, gratis, en muchos idiomas y sin dejar rastro en la factura. Después llegará el tiempo de la mediación y del fiqh.', src: 'Corán 2:195, 4:75' },
+  { group: 'injusticia', title: '1. Hablarlo con calma', text: 'Explica qué te duele en un momento tranquilo, sin acusar, con hechos concretos y lo que necesitas. Escucha también su versión. Muchos conflictos se arreglan aquí.', src: 'Corán 4:128; 16:125' },
+  { group: 'injusticia', title: '2. Árbitros de las dos familias', text: 'Si no basta, el Corán manda nombrar «un árbitro de la familia de él y otro de la de ella» para escuchar a los dos y buscar la reconciliación con justicia.', src: 'Corán 4:35' },
+  { group: 'injusticia', title: '3. Un imam o un consejero', text: 'Acudir al imam de la mezquita, a una persona de conocimiento o a terapia de pareja. Pedir ayuda no es traicionar al cónyuge: es buscar el bien de los dos.', src: 'Corán 16:43' },
+  { group: 'injusticia', title: 'Si él no te mantiene', text: 'Hind bint Utba se quejó de que Abu Sufyan no le daba lo suficiente, y el Profeta ﷺ le dijo: «Toma de su dinero lo que te baste a ti y a tus hijos, según lo razonable».', src: 'Al-Bujari 5364' },
+  { group: 'injusticia', title: 'La separación pedida por la mujer (jul)', text: 'Si la convivencia se ha vuelto imposible, la mujer puede pedir la separación devolviendo la dote, como hizo la esposa de Zabit ibn Qays. Ante abuso o abandono grave, el juez o la autoridad religiosa puede disolver el matrimonio sin que ella pierda sus derechos.', src: 'Al-Bujari 5273; Corán 2:229' },
+  { group: 'injusticia', title: 'Si es el hombre quien sufre la injusticia', text: 'También le corresponde hablar, pedir árbitros y buscar ayuda. Si decide divorciarse, se hace bien: un solo talaq, cuando ella no tiene la regla, con su periodo de espera (idda) en casa y su manutención, y despidiéndose «con bondad».', src: 'Corán 65:1-2, 2:229-231' },
+  { group: 'injusticia', title: 'Los derechos tras la separación', text: 'La mujer divorciada conserva su dote y tiene manutención durante la idda. Los dos siguen obligados con sus hijos: el padre con su manutención y ambos con su cuidado y su bienestar. «No olvidéis el favor entre vosotros.»', src: 'Corán 2:233, 2:237, 65:6' },
+  { group: 'injusticia', title: 'Recurre también a la ley', text: 'Vivir en un país no musulmán no te quita ninguna protección: puedes acudir a la policía, a servicios sociales y a los tribunales para protegerte a ti y a tus hijos. Hacerlo no contradice tu religión.', src: 'Corán 4:58, 4:135' },
 ];

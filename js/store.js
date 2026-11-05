@@ -10,6 +10,7 @@ const defaults = () => ({
   arabic: { done: [], best: {} },
   fasts: {},           // 'YYYY-MM-DD': { type }
   qada: 0,             // Ramadan days still to make up
+  tawba: { start: null, best: 0, relapses: 0, label: '' }, // private 'days firm' counter
   settings: {
     method: 'MWL',
     asr: 'standard',
