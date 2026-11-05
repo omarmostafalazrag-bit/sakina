@@ -1,0 +1,24 @@
+{
+  "name": "Sakina · Rezos, duas y dikr",
+  "short_name": "Sakina",
+  "description": "Horarios de rezo por ubicación, registro diario de oraciones, duas con búsqueda, dikr, aprendizaje y sadaqa.",
+  "lang": "es",
+  "start_url": "./#/hoy",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F3EEE4",
+  "theme_color": "#1E4D72",
+  "categories": ["lifestyle", "education"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ],
+  "shortcuts": [
+    { "name": "Dikr", "url": "./#/dikr" },
+    { "name": "Duas", "url": "./#/duas" },
+    { "name": "Añadir sadaqa", "url": "./#/sadaqa" }
+  ]
+}
