@@ -68,6 +68,7 @@ export function mount(root) {
           const n = prog[i] || 0, done = n >= it.count;
           return `<div class="adhkar-item ${done ? 'done' : ''}">
             <p class="ar" lang="ar">${esc(it.ar)}</p>
+            ${it.tr ? `<p class="tr-line">${esc(it.tr)}</p>` : ''}
             <p class="es">${esc(it.es)}</p>
             <div class="foot"><span class="src">${esc(it.src)}</span>
               <button class="tap-count ${done ? 'done' : ''}" data-item="${i}" aria-label="Contar ${i + 1}: ${n} de ${it.count}">${done ? icon('check') : `<span class="num">${n}/${it.count}</span>`}</button></div>

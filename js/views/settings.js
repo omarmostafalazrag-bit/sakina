@@ -82,7 +82,15 @@ export function openSettings() {
     <label class="field" style="margin:0"><span>${p.es}</span>
       <input class="input num" type="number" inputmode="numeric" min="-30" max="30" step="1" value="${s.tune[p.id] || 0}" data-tune="${p.id}" /></label>`).join('');
 
+  const prof = getState().profile;
   openSheet('Ajustes', `
+    <h3 class="group">Perfil</h3>
+    <div class="field"><span>Soy</span><div class="seg" role="group" aria-label="Género">
+      ${[['m', 'Hombre'], ['f', 'Mujer']].map(([v, l]) => `<button data-gender="${v}" aria-pressed="${prof.gender === v}">${l}</button>`).join('')}
+    </div></div>
+    <div class="list" style="margin-bottom:6px"><label class="list-row"><div class="grow"><div>Soy nuevo o nueva en el islam</div><div class="meta">Muestra tu camino de lecciones en Hoy</div></div>
+      <span class="switch"><input type="checkbox" data-newm ${prof.newMuslim ? 'checked' : ''} aria-label="Soy nuevo en el islam" /><span></span></span></label></div>
+
     <h3 class="group">Cálculo de horarios</h3>
     <label class="field"><span>Método</span><select class="input" data-k="method">${methodOpts}</select></label>
     <p class="help">Elige el que usa tu mezquita o tu país. En España muchas mezquitas usan la Liga Mundial Musulmana; en Marruecos, Habous.</p>
@@ -146,6 +154,12 @@ export function openSettings() {
       root.querySelectorAll('[data-asr]').forEach((x) => x.setAttribute('aria-pressed', x === b));
       scheduleReminders(); refresh();
     }));
+    root.querySelectorAll('[data-gender]').forEach((b) => b.addEventListener('click', () => {
+      update((st) => { st.profile.gender = b.dataset.gender; st.profile.onboarded = true; });
+      root.querySelectorAll('[data-gender]').forEach((x) => x.setAttribute('aria-pressed', x === b));
+      refresh();
+    }));
+    root.querySelector('[data-newm]').addEventListener('change', (e) => { update((st) => { st.profile.newMuslim = e.target.checked; }); refresh(); });
     root.querySelectorAll('[data-theme]').forEach((b) => b.addEventListener('click', () => {
       update((st) => { st.settings.theme = b.dataset.theme; });
       root.querySelectorAll('[data-theme]').forEach((x) => x.setAttribute('aria-pressed', x === b));

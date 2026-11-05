@@ -27,11 +27,11 @@ export const METHODS = {
 };
 
 export const PRAYERS = [
-  { id: 'fajr', es: 'Fajr', ar: 'الفجر' },
-  { id: 'dhuhr', es: 'Dhuhr', ar: 'الظهر' },
-  { id: 'asr', es: 'Asr', ar: 'العصر' },
-  { id: 'maghrib', es: 'Maghrib', ar: 'المغرب' },
-  { id: 'isha', es: 'Isha', ar: 'العشاء' },
+  { id: 'fajr', es: 'Fajr', ar: 'الفجر', mean: 'El alba', rakaat: 2 },
+  { id: 'dhuhr', es: 'Dhuhr', ar: 'الظهر', mean: 'El mediodía', rakaat: 4 },
+  { id: 'asr', es: 'Asr', ar: 'العصر', mean: 'La tarde', rakaat: 4 },
+  { id: 'maghrib', es: 'Maghrib', ar: 'المغرب', mean: 'La puesta del sol', rakaat: 3 },
+  { id: 'isha', es: 'Isha', ar: 'العشاء', mean: 'La noche', rakaat: 4 },
 ];
 
 function julian(y, m, d) {

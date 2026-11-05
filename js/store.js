@@ -4,6 +4,10 @@ const KEY = 'sakina:v1';
 const defaults = () => ({
   version: 1,
   location: null, // { name, lat, lng, tz }
+  profile: { gender: null, newMuslim: false, onboarded: false }, // gender: 'm' | 'f' | null
+  period: { days: {}, ongoing: null }, // days: { 'YYYY-MM-DD': true }, ongoing: start key while bleeding
+  path: { done: [] },   // new-muslim lessons completed
+  arabic: { done: [], best: {} },
   settings: {
     method: 'MWL',
     asr: 'standard',
@@ -29,7 +33,7 @@ function load() {
     if (!raw) return defaults();
     const data = JSON.parse(raw);
     const d = defaults();
-    return { ...d, ...data, settings: { ...d.settings, ...data.settings, tune: { ...d.settings.tune, ...(data.settings?.tune || {}) } }, dhikr: { ...d.dhikr, ...data.dhikr }, learn: { ...d.learn, ...data.learn }, duas: { ...d.duas, ...data.duas } };
+    return { ...d, ...data, settings: { ...d.settings, ...data.settings, tune: { ...d.settings.tune, ...(data.settings?.tune || {}) } }, dhikr: { ...d.dhikr, ...data.dhikr }, profile: { ...d.profile, ...data.profile }, period: { ...d.period, ...data.period }, path: { ...d.path, ...data.path }, arabic: { ...d.arabic, ...data.arabic }, learn: { ...d.learn, ...data.learn }, duas: { ...d.duas, ...data.duas } };
   } catch {
     return defaults();
   }

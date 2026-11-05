@@ -14,7 +14,7 @@ let cleanup = null;
 let currentRoute = null;
 
 function routeName() {
-  const r = location.hash.replace(/^#\/?/, '').split('?')[0];
+  const r = location.hash.replace(/^#\/?/, '').split(/[?/]/)[0];
   return ROUTES[r] ? r : 'hoy';
 }
 
@@ -48,7 +48,7 @@ export function applyTheme() {
   document.querySelectorAll('meta[name="theme-color"]').forEach((m) => m.setAttribute('content', dark ? '#0E1116' : '#F3EEE4'));
 }
 
-window.addEventListener('hashchange', () => show(routeName()));
+window.addEventListener('hashchange', () => { const r = routeName(); if (r === currentRoute) refresh(); else show(r); });
 // Re-sync when returning to the app (new day, passed prayers, reminders)
 document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'visible') { scheduleReminders(); if (currentRoute === 'hoy') refresh(); }

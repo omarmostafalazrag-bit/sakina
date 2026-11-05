@@ -1,15 +1,17 @@
 // Offline-first service worker. Bump VERSION when shipping changes.
-const VERSION = 'sakina-v1';
+const VERSION = 'sakina-v2';
 const SHELL = [
   './', 'index.html', 'styles.css', 'manifest.webmanifest',
   'js/app.js', 'js/store.js', 'js/ui.js', 'js/core.js', 'js/prayer-times.js',
-  'js/views/today.js', 'js/views/settings.js', 'js/views/duas.js', 'js/views/dhikr.js', 'js/views/learn.js', 'js/views/sadaqa.js',
-  'js/data/duas.js', 'js/data/adhkar.js', 'js/data/learn.js',
+  'js/views/today.js', 'js/views/calendar.js', 'js/views/settings.js', 'js/views/duas.js', 'js/views/dhikr.js', 'js/views/learn.js', 'js/views/feed.js',
+  'js/views/path.js', 'js/views/arabic.js', 'js/views/guide.js', 'js/views/blocks.js', 'js/views/sadaqa.js',
+  'js/data/duas.js', 'js/data/adhkar.js', 'js/data/learn.js', 'js/data/guide.js', 'js/data/newmuslim.js', 'js/data/arabic.js',
   'icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-180.png',
 ];
 
 self.addEventListener('install', (e) => {
-  e.waitUntil(caches.open(VERSION).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));
+  // cache: 'reload' skips the HTTP cache so a new version never installs stale files
+  e.waitUntil(caches.open(VERSION).then((c) => c.addAll(SHELL.map((u) => new Request(u, { cache: 'reload' })))).then(() => self.skipWaiting()));
 });
 
 self.addEventListener('activate', (e) => {
@@ -36,7 +38,7 @@ self.addEventListener('fetch', (e) => {
   if (url.origin === location.origin) {
     e.respondWith(caches.open(VERSION).then(async (c) => {
       const hit = await c.match(e.request, { ignoreSearch: true });
-      const net = fetch(e.request).then((res) => { if (res.ok) c.put(e.request, res.clone()); return res; }).catch(() => hit);
+      const net = fetch(e.request, { cache: 'no-cache' }).then((res) => { if (res.ok) c.put(e.request, res.clone()); return res; }).catch(() => hit);
       return hit || net;
     }));
   }

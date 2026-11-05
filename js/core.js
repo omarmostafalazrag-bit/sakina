@@ -1,6 +1,6 @@
 // Shared domain helpers: today's schedule, formatting, Hijri date, reminders, calendar export.
 import { getState } from './store.js';
-import { computeTimes, dateInTz, addDays, dateKey, PRAYERS } from './prayer-times.js';
+import { computeTimes, dateInTz, addDays, dateKey, parseKey, PRAYERS } from './prayer-times.js';
 
 export const deviceTz = () => Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
 export const tzOf = () => getState().location?.tz || deviceTz();
@@ -77,11 +77,67 @@ export function dayScore(key) {
   return PRAYERS.reduce((n, p) => n + (rec[p.id]?.done ? 1 : 0), 0);
 }
 
-/** Consecutive days with all five prayers, counting back from today (today counts only if complete). */
+/* ---------------- Period (hayd) ---------------- */
+export const isFemale = () => getState().profile.gender === 'f';
+
+/** True when the day is marked as a period day (women are excused from prayer). */
+export function isPeriod(key) {
+  if (!isFemale()) return false;
+  const { days, ongoing } = getState().period;
+  if (days[key]) return true;
+  return !!ongoing && key >= ongoing && key <= todayKey();
+}
+
+/** Turn an ongoing period into explicit days up to (and including) `endKey`. */
+export function materializePeriod(s, endKey) {
+  const start = s.period.ongoing;
+  if (!start) return;
+  let d = parseKey(start);
+  for (let i = 0; i < 40 && dateKey(d) <= endKey; i++) { s.period.days[dateKey(d)] = true; d = addDays(d, 1); }
+  s.period.ongoing = null;
+}
+
+/** Past periods as runs of consecutive days: [{ start, end, length }] (oldest first). */
+export function periodRuns() {
+  const keys = Object.keys(getState().period.days).filter((k) => getState().period.days[k]).sort();
+  const ongoing = getState().period.ongoing;
+  const runs = [];
+  for (const k of keys) {
+    const last = runs[runs.length - 1];
+    if (last && dateKey(addDays(parseKey(last.end), 1)) === k) { last.end = k; last.length++; }
+    else runs.push({ start: k, end: k, length: 1 });
+  }
+  if (ongoing) {
+    const t = todayKey();
+    const len = Math.round((Date.parse(t) - Date.parse(ongoing)) / 86400000) + 1;
+    runs.push({ start: ongoing, end: t, length: len, ongoing: true });
+  }
+  return runs;
+}
+
+export function periodStats() {
+  const runs = periodRuns();
+  const done = runs.filter((r) => !r.ongoing);
+  const avgLen = done.length ? Math.round(done.reduce((n, r) => n + r.length, 0) / done.length) : null;
+  const gaps = [];
+  for (let i = 1; i < runs.length; i++) gaps.push(Math.round((Date.parse(runs[i].start) - Date.parse(runs[i - 1].start)) / 86400000));
+  const cycle = gaps.length ? Math.round(gaps.slice(-6).reduce((a, b) => a + b, 0) / Math.min(gaps.length, 6)) : null;
+  const last = runs[runs.length - 1];
+  const next = cycle && last ? dateKey(addDays(parseKey(last.start), cycle)) : null;
+  return { runs, avgLen, cycle, next, last };
+}
+
+/** Consecutive days with all five prayers. Period days are neutral (they neither break nor add). */
 export function streak() {
   let d = todayDate(), n = 0;
-  if (dayScore(dateKey(d)) < 5) d = addDays(d, -1);
-  while (dayScore(dateKey(d)) === 5) { n++; d = addDays(d, -1); }
+  const k0 = dateKey(d);
+  if (dayScore(k0) < 5 && !isPeriod(k0)) d = addDays(d, -1);
+  for (let i = 0; i < 3650; i++) {
+    const k = dateKey(d);
+    if (isPeriod(k)) { d = addDays(d, -1); continue; }
+    if (dayScore(k) !== 5) break;
+    n++; d = addDays(d, -1);
+  }
   return n;
 }
 
@@ -137,4 +193,29 @@ export function buildIcs(days = 30) {
   }
   lines.push('END:VCALENDAR');
   return lines.join('\r\n');
+}
+
+/** Share of obligatory prayers prayed in a month, up to today; period days excluded. */
+export function monthPct(y, m) {
+  const tk = todayKey();
+  let total = 0, done = 0;
+  for (let d = 1; d <= 31; d++) {
+    const k = dateKey({ y, m, d });
+    const dt = new Date(Date.UTC(y, m - 1, d));
+    if (dt.getUTCMonth() !== m - 1 || k > tk || isPeriod(k)) continue;
+    total += 5; done += dayScore(k);
+  }
+  return total ? Math.round((done / total) * 100) : 0;
+}
+
+/** Hijri month names spanned by a Gregorian month, e.g. "Yumada al-Ula – Yumada al-Ajira 1448". */
+export function hijriSpan(y, m) {
+  const a = hijri(new Date(Date.UTC(y, m - 1, 1, 12)));
+  const last = new Date(Date.UTC(y, m, 0, 12));
+  const b = hijri(last);
+  const ma = a.es.replace(/^\d+ de /, '').replace(/ de (\d+) H$/, ' $1');
+  const mb = b.es.replace(/^\d+ de /, '').replace(/ de (\d+) H$/, ' $1');
+  if (ma === mb) return mb;
+  const ya = ma.split(' ').pop(), yb = mb.split(' ').pop();
+  return ya === yb ? `${ma.replace(/ \d+$/, '')} – ${mb}` : `${ma} – ${mb}`;
 }

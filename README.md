@@ -4,14 +4,20 @@ Tu compañero diario para la práctica del islam: una app web instalable (PWA) q
 
 ## Qué incluye
 
-- **Hoy**: horarios de rezo calculados en el dispositivo para tu ubicación (GPS o búsqueda de ciudad), próxima oración con cuenta atrás, registro de las cinco oraciones (y si fue en congregación), racha de días, porcentaje del mes y mapa de las últimas cinco semanas. Fecha hégira.
-- **Qibla**: dirección y distancia a La Meca, con brújula en vivo en móviles que lo permiten.
-- **Duas**: unas 40 súplicas del Corán y la Sunnah con árabe, transliteración, traducción y fuente. Búsqueda por necesidad con sinónimos («finanzas» encuentra las de deudas y sustento), categorías y guardadas.
-- **Dikr**: contador (tasbih) con anillo de progreso y vibración, la secuencia de 33·33·33 tras la oración, y los adhkar de la mañana, la tarde y después de rezar con su progreso del día.
-- **Aprender**: un feed con Corán, hadices, la sira, historias de los profetas, sunnah práctica y fundamentos. Lectura del día, filtros, guardar y compartir.
-- **Sadaqa**: registro de donaciones (cantidad, moneda, tipo, destinatario, nota), totales del mes y del año, desglose por tipo, exportación a CSV y calculadora orientativa de zakat.
-- **Recordatorios**: notificaciones de rezo y exportación de 30 días de horarios a tu calendario (.ics) con alarma, que es la opción fiable en iPhone.
-- **Ajustes**: 12 métodos de cálculo (Liga Mundial Musulmana, Egipto, Habous, Umm al-Qura, ISNA, Diyanet…), Asr estándar o hanafi, ajuste fino por minutos, tema claro u oscuro, formato de 12 horas, corrección de la fecha hégira, y copia de seguridad para exportar e importar.
+- **Hoy**: horarios de rezo calculados en el dispositivo para tu ubicación (GPS o búsqueda de ciudad), próxima oración con cuenta atrás, registro de las cinco oraciones (y si fue en congregación), racha y fecha hégira.
+- **Calendario mensual**: navega mes a mes, ve qué días completaste y toca un día para marcar las oraciones que rezaste.
+- **Perfil hombre / mujer**: para la mujer, seguimiento de la regla: pausa las oraciones esos días (sin romper la racha), los marca en el calendario, calcula duración media, ciclo y fecha prevista.
+- **Qibla**: dirección y distancia a La Meca, con brújula en vivo.
+- **Duas**: más de 70 súplicas del Corán y la Sunnah con árabe, transliteración, traducción y fuente. Búsqueda por necesidad con sinónimos («finanzas» encuentra deudas y sustento).
+- **Dikr**: contador con vibración, secuencia 33·33·33 y adhkar de mañana, tarde y tras la oración, todos con transliteración y traducción completa.
+- **Aprender**:
+  - *Lecturas*: casi 90 textos de Corán, hadices, sira, profetas, sunnah y fundamentos.
+  - *Empezar*: 15 lecciones para nuevos musulmanes, de la shahada a cómo rezar paso a paso y Al-Fatiha palabra por palabra.
+  - *Árabe*: curso desde cero (alfabeto con sus formas, vocales, reglas de lectura y vocabulario), con audio y dos juegos de práctica.
+  - *Mi guía*: obligaciones, derechos, lo prohibido y lo permitido según seas hombre o mujer, con fuentes.
+- **Sadaqa**: registro de donaciones, totales, desglose por tipo, exportación CSV y calculadora de zakat.
+- **Recordatorios**: notificaciones y exportación de 30 días de horarios a tu calendario (.ics) con alarma.
+- **Ajustes**: 12 métodos de cálculo, Asr estándar o hanafi, ajuste por minutos, tema claro u oscuro, perfil y copia de seguridad.
 
 ## Instalar en el móvil
 
