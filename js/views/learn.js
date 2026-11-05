@@ -3,9 +3,11 @@ import * as feed from './feed.js';
 import * as path from './path.js';
 import * as arabic from './arabic.js';
 import * as guide from './guide.js';
+import * as advisor from './advisor.js';
 
 const SUBS = [
   { id: '', label: 'Lecturas', mod: feed },
+  { id: 'asesor', label: 'Asesor', mod: advisor },
   { id: 'empezar', label: 'Empezar', mod: path },
   { id: 'arabe', label: 'Árabe', mod: arabic },
   { id: 'guia', label: 'Mi guía', mod: guide },

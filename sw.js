@@ -1,10 +1,10 @@
 // Offline-first service worker. Bump VERSION when shipping changes.
-const VERSION = 'sakina-v3';
+const VERSION = 'sakina-v4';
 const SHELL = [
   './', 'index.html', 'styles.css', 'manifest.webmanifest',
   'js/app.js', 'js/store.js', 'js/ui.js', 'js/core.js', 'js/prayer-times.js',
   'js/views/today.js', 'js/views/calendar.js', 'js/views/settings.js', 'js/views/duas.js', 'js/views/dhikr.js', 'js/views/learn.js', 'js/views/feed.js',
-  'js/views/path.js', 'js/views/arabic.js', 'js/views/guide.js', 'js/views/blocks.js', 'js/views/sadaqa.js',
+  'js/views/path.js', 'js/views/arabic.js', 'js/views/guide.js', 'js/views/blocks.js', 'js/views/advisor.js', 'js/advisor-core.js', 'js/views/sadaqa.js',
   'js/data/duas.js', 'js/data/adhkar.js', 'js/data/learn.js', 'js/data/guide.js', 'js/data/newmuslim.js', 'js/data/arabic.js',
   'icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-180.png',
 ];
