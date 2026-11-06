@@ -25,7 +25,7 @@ export function mount(root) {
     const sq = (s.sadaqa || []).filter((x) => x.date === k).length;
     if (sq) bits.push(`${sq} sadaqa`);
     const q = (s.quran?.days?.[k] || []).length;
-    if (q) bits.push(`${q} pág. de Corán`);
+    if (q) bits.push(`${q} ${q === 1 ? 'aleya' : 'aleyas'} de Corán`);
     return bits;
   };
 

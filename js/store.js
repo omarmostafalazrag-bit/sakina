@@ -11,7 +11,7 @@ const defaults = () => ({
   fasts: {},           // 'YYYY-MM-DD': { type }
   qada: 0,             // Ramadan days still to make up
   tawba: { start: null, best: 0, relapses: 0, label: '' }, // private 'days firm' counter
-  quran: { page: 29, bookmarks: [], days: {} }, // reading position in the user's own PDF
+  quran: { sura: 1, ayah: 1, tr: 'es.garcia', showTr: true, size: 28, bookmarks: [], days: {} }, // reading position and preferences
   journal: {},         // 'YYYY-MM-DD': { mood, reflection, gratitude[], good, fail, improve, dua, free }
   settings: {
     method: 'MWL',

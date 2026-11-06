@@ -6,7 +6,7 @@ import { openLocation, openSettings, openQibla } from './settings.js';
 import { renderCalendar, bindCalendar } from './calendar.js';
 import { POSTS } from '../data/learn.js';
 import { LESSONS } from '../data/newmuslim.js';
-import { suraOfPage } from './quran.js';
+import { SURAS } from '../data/suras.js';
 
 export function mount(root) {
   const render = () => {
@@ -279,9 +279,9 @@ function openFastSheet(rerender) {
 function quranLine() {
   const q = getState().quran || {};
   const n = (q.days?.[todayKey()] || []).length;
-  if (n) return `${n} ${n === 1 ? 'página' : 'páginas'} hoy`;
-  const s = q.page ? suraOfPage(q.page) : null;
-  return s && q.page > 29 ? `Seguir: ${s[2]}` : 'Leer';
+  if (n) return `${n} ${n === 1 ? 'aleya' : 'aleyas'} hoy`;
+  const s = q.sura ? SURAS[q.sura - 1] : null;
+  return s && (q.sura > 1 || q.ayah > 1) ? `Seguir: ${s[2]} ${q.sura}:${q.ayah}` : 'Leer';
 }
 
 function pathCard() {
