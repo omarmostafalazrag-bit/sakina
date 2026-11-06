@@ -6,9 +6,11 @@ import * as duas from './views/duas.js';
 import * as dhikr from './views/dhikr.js';
 import * as learn from './views/learn.js';
 import * as sadaqa from './views/sadaqa.js';
+import * as quran from './views/quran.js';
+import * as journal from './views/journal.js';
 
-const ROUTES = { hoy: today, duas, dikr: dhikr, aprender: learn, sadaqa };
-const TITLES = { hoy: 'Hoy', duas: 'Duas', dikr: 'Dikr', aprender: 'Aprender', sadaqa: 'Sadaqa' };
+const ROUTES = { hoy: today, duas, dikr: dhikr, aprender: learn, sadaqa, coran: quran, diario: journal };
+const TITLES = { hoy: 'Hoy', duas: 'Duas', dikr: 'Dikr', aprender: 'Aprender', sadaqa: 'Sadaqa', coran: 'Corán', diario: 'Diario' };
 const viewEl = document.getElementById('view');
 let cleanup = null;
 let currentRoute = null;

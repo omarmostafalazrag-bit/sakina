@@ -6,6 +6,7 @@ import { openLocation, openSettings, openQibla } from './settings.js';
 import { renderCalendar, bindCalendar } from './calendar.js';
 import { POSTS } from '../data/learn.js';
 import { LESSONS } from '../data/newmuslim.js';
+import { suraOfPage } from './quran.js';
 
 export function mount(root) {
   const render = () => {
@@ -212,6 +213,11 @@ function view() {
 
     ${fastCard(key, excused)}
 
+    <div class="quick">
+      <a class="quick-card" href="#/coran">${icon('book')}<span><b>Corán</b><span class="small muted">${quranLine()}</span></span></a>
+      <a class="quick-card" href="#/diario">${icon('lamp')}<span><b>Diario</b><span class="small muted">${s.journal?.[key] ? 'Seguir escribiendo' : 'Escribe tu día'}</span></span></a>
+    </div>
+
     ${s.profile.newMuslim ? pathCard() : ''}
 
     <h2 class="section">Calendario</h2>
@@ -268,6 +274,14 @@ function openFastSheet(rerender) {
       rerender();
     });
   });
+}
+
+function quranLine() {
+  const q = getState().quran || {};
+  const n = (q.days?.[todayKey()] || []).length;
+  if (n) return `${n} ${n === 1 ? 'página' : 'páginas'} hoy`;
+  const s = q.page ? suraOfPage(q.page) : null;
+  return s && q.page > 29 ? `Seguir: ${s[2]}` : 'Leer';
 }
 
 function pathCard() {

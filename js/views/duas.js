@@ -20,6 +20,7 @@ export function search(query, cat) {
   const fav = new Set(getState().duas.fav);
   let list = INDEX;
   if (cat === 'fav') list = list.filter((x) => fav.has(x.d.id));
+  else if (cat === 'pareja') list = list.filter((x) => x.d.tags.some((t) => ['pareja', 'matrimonio', 'esposa', 'esposo'].includes(t)));
   else if (cat !== 'all') list = list.filter((x) => x.d.cat === cat || (cat === 'rizq' && x.d.tags.includes('dinero')));
   const words = norm(query).split(/\s+/).filter((w) => w.length > 1);
   if (!words.length) return list.map((x) => x.d);

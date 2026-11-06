@@ -1,10 +1,12 @@
 // Offline-first service worker. Bump VERSION when shipping changes.
-const VERSION = 'sakina-v5';
+const VERSION = 'sakina-v6';
 const SHELL = [
   './', 'index.html', 'styles.css', 'manifest.webmanifest',
   'js/app.js', 'js/store.js', 'js/ui.js', 'js/core.js', 'js/prayer-times.js',
   'js/views/today.js', 'js/views/calendar.js', 'js/views/settings.js', 'js/views/duas.js', 'js/views/dhikr.js', 'js/views/learn.js', 'js/views/feed.js',
-  'js/views/path.js', 'js/views/arabic.js', 'js/views/guide.js', 'js/views/blocks.js', 'js/views/tawba.js', 'js/data/tawba.js', 'js/views/sadaqa.js',
+  'js/views/path.js', 'js/views/arabic.js', 'js/views/guide.js', 'js/views/blocks.js', 'js/views/tawba.js', 'js/data/tawba.js',
+  'js/views/quran.js', 'js/views/journal.js', 'js/idb.js', 'js/data/suras.js', 'js/data/journal.js',
+  'js/vendor/pdfjs/pdf.min.mjs', 'js/vendor/pdfjs/pdf.worker.min.mjs', 'js/views/sadaqa.js',
   'js/data/duas.js', 'js/data/adhkar.js', 'js/data/learn.js', 'js/data/guide.js', 'js/data/newmuslim.js', 'js/data/arabic.js',
   'icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-180.png',
 ];

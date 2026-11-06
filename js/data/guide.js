@@ -5,6 +5,7 @@ export const GUIDE_SECTIONS = [
   { id: 'obligaciones', label: 'Obligaciones', intro: 'Lo que Allah pide a todo musulmán adulto y con capacidad. Cumplirlo es adoración y se recompensa.' },
   { id: 'derechos', label: 'Derechos', intro: 'El islam establece derechos que nadie puede quitarte, y derechos que tú debes respetar en los demás.' },
   { id: 'prohibido', label: 'Prohibido', intro: 'Lo haram: lo que Allah ha prohibido para protegerte a ti y a la sociedad. Si caes en algo, la puerta del arrepentimiento siempre está abierta.' },
+  { id: 'mejor', label: 'Ser mejor', intro: 'Consejos del Corán y la Sunna para crecer como persona: lo que nos une a todos y lo propio de cada uno.' },
   { id: 'matrimonio', label: 'Matrimonio', intro: 'El trato entre esposos según el Corán y la Sunnah: derechos y obligaciones de cada uno, el ejemplo del Profeta ﷺ y la modestia.' },
   { id: 'permitido', label: 'Permitido', intro: 'La regla general es que todo es lícito salvo lo que una prueba clara prohíbe. La lista de lo halal es mucho más larga que la de lo haram.' },
 ];
@@ -80,6 +81,32 @@ export const GUIDE = [
   { sec: 'permitido', for: 'f', title: 'Durante la regla', text: 'Puedes hacer dikr, duas, escuchar el Corán, aprender y dar sadaqa. Sobre recitar el Corán de memoria los sabios difieren: los malikíes lo permiten; otras escuelas no.', src: 'Al-Bujari 305' },
   { sec: 'permitido', for: 'f', title: 'Trabajar, estudiar y tener negocio propio', text: 'Con respeto a las normas de pudor y a tus obligaciones familiares. Tus ingresos son tuyos.', src: 'Corán 4:32' },
   { sec: 'permitido', for: 'f', title: 'No ayunar si estás embarazada o das el pecho', text: 'Si temes por ti o por el bebé, puedes no ayunar y recuperar después (algunas escuelas piden además fidya).', src: 'Abu Dawud 2408; At-Tirmidhi 715' },
+  // ---------------- Ser mejor (character) ----------------
+  { sec: 'mejor', for: 'all', title: 'El buen carácter es lo que más pesa', text: '«No hay nada más pesado en la balanza del creyente el Día del Juicio que el buen carácter.» Y: «Los creyentes de fe más completa son los de mejor carácter».', src: 'At-Tirmidhi 2002; Abu Dawud 4682' },
+  { sec: 'mejor', for: 'all', title: 'Domina tu ira', text: '«El fuerte no es el que vence en la lucha, sino el que se domina cuando se enfada.»', src: 'Al-Bujari 6114; Muslim 2609' },
+  { sec: 'mejor', for: 'all', title: 'Veraz y digno de confianza', text: 'La veracidad lleva a la bondad y la bondad al Paraíso. Antes de la profecía, a Muhammad ﷺ le llamaban Al-Amín: el digno de confianza.', src: 'Al-Bujari 6094; Ibn Hisham' },
+  { sec: 'mejor', for: 'all', title: 'Cuida tu cuerpo', text: '«Tu cuerpo tiene un derecho sobre ti»: comer bien, dormir, hacer ejercicio. El creyente fuerte es más amado por Allah que el débil.', src: 'Al-Bujari 1975; Muslim 2664' },
+  { sec: 'mejor', for: 'all', title: 'Busca conocimiento toda la vida', text: '«Quien recorre un camino buscando conocimiento, Allah le facilita un camino al Paraíso.» Reserva un rato cada semana para aprender.', src: 'Muslim 2699' },
+  { sec: 'mejor', for: 'all', title: 'Sé útil a la gente', text: '«Las personas más amadas por Allah son las más beneficiosas para la gente.»', src: 'At-Tabarani, Al-Awsat 6026 (hasan según Al-Albani)' },
+  { sec: 'mejor', for: 'all', title: 'Bello por fuera también', text: '«Allah es bello y ama la belleza»: la limpieza, el buen olor y la ropa cuidada son parte de la religión, sin arrogancia.', src: 'Muslim 91' },
+
+  { sec: 'mejor', for: 'm', title: 'Mide tu hombría en casa', text: '«Los mejores de vosotros son los mejores con sus familias.» El Profeta ﷺ, el hombre más grande, cosía su ropa, ayudaba en las tareas y jugaba con los niños.', src: 'At-Tirmidhi 3895; Al-Bujari 676' },
+  { sec: 'mejor', for: 'm', title: 'La qiwama es servicio', text: 'Ser «responsable» de la familia (4:34) significa proteger, mantener y cuidar, no mandar por mandar. «Todos sois pastores y responsables de vuestro rebaño.»', src: 'Corán 4:34; Al-Bujari 893' },
+  { sec: 'mejor', for: 'm', title: 'Suave, no duro', text: 'Allah le dijo al Profeta ﷺ: «Si hubieras sido duro y de corazón áspero, se habrían apartado de ti». La firmeza no está reñida con la ternura.', src: 'Corán 3:159' },
+  { sec: 'mejor', for: 'm', title: 'Generoso con los tuyos', text: '«El dinero que gastas en tu familia es el de mayor recompensa», más que el que das en otras causas.', src: 'Muslim 995' },
+  { sec: 'mejor', for: 'm', title: 'Baja la mirada', text: 'La orden de bajar la mirada empieza por los hombres (24:30). Lo que miras alimenta tu corazón, en la calle y en la pantalla.', src: 'Corán 24:30; Muslim 2159' },
+  { sec: 'mejor', for: 'm', title: 'Líder en la oración de casa', text: 'Reza a veces con tu familia, enséñales con el ejemplo y reza las voluntarias en casa: «Haced vuestras casas lugares de oración».', src: 'Al-Bujari 432, 731' },
+  { sec: 'mejor', for: 'm', title: 'Celos sanos, no sospechas', text: 'La ghayra protege el honor de la familia; espiar, controlar y sospechar sin pruebas está prohibido.', src: 'Al-Bujari 5220; Corán 49:12' },
+  { sec: 'mejor', for: 'm', title: 'Honra a las mujeres de tu vida', text: 'Tu madre tres veces antes que tu padre. Quien cría bien a dos hijas hasta que son mayores estará junto al Profeta ﷺ el Día del Juicio.', src: 'Al-Bujari 5971; Muslim 2631' },
+
+  { sec: 'mejor', for: 'f', title: 'Modelos a seguir', text: 'El Profeta ﷺ nombró como las mejores mujeres de la humanidad a Maryam, Asiya (esposa del Faraón), Jadiya y Fátima: una madre firme, una creyente valiente ante un tirano, una empresaria generosa y una hija devota.', src: 'At-Tirmidhi 3878; Al-Bujari 3411' },
+  { sec: 'mejor', for: 'f', title: 'Aprende y enseña', text: 'Aisha transmitió más de dos mil hadices y los grandes compañeros le consultaban. Sobre las mujeres de Medina dijo: «El pudor no les impedía aprender su religión».', src: 'Muslim 332; Al-Bujari 130' },
+  { sec: 'mejor', for: 'f', title: 'Haya con seguridad', text: 'El pudor es belleza y no timidez paralizante: las compañeras preguntaban al Profeta ﷺ, opinaban y defendían sus derechos.', src: 'Al-Bujari 24, 130; Corán 58:1' },
+  { sec: 'mejor', for: 'f', title: 'Tu esfuerzo es adoración', text: 'Cuidar a tu familia, trabajar o estudiar con buena intención es ibada. «Las obras son según las intenciones.»', src: 'Al-Bujari 1' },
+  { sec: 'mejor', for: 'f', title: 'Cuida tu corazón y tus límites', text: 'Asiya pidió a Allah «una casa junto a Ti en el Paraíso» mientras vivía con el Faraón. Tu relación con Allah es tuya y nadie puede quitártela.', src: 'Corán 66:11' },
+  { sec: 'mejor', for: 'f', title: 'Generosa con lo tuyo', text: 'Cuando el Profeta ﷺ animó a las mujeres a dar sadaqa, ellas dieron sus joyas. Zaynab, esposa de Ibn Masud, preguntó si podía dar a su marido y recibió doble recompensa.', src: 'Al-Bujari 1462, 1466' },
+  { sec: 'mejor', for: 'f', title: 'Una buena compañera', text: '«Este mundo es disfrute, y el mejor disfrute de este mundo es la mujer recta.» Lo mismo vale al revés: buscad juntos la rectitud.', src: 'Muslim 1467' },
+  { sec: 'mejor', for: 'f', title: 'Tu salud también importa', text: 'Las exenciones de la regla, el embarazo y la lactancia son misericordia: descansar cuando toca no es falta de fe.', src: 'Corán 2:185, 2:286' },
 ];
 
 export const GUIDE_NOTE = 'Esta guía resume posiciones mayoritarias con su fuente. En temas donde las escuelas difieren o en tu caso personal, consulta a un imam o a un sabio de confianza.';
